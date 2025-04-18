@@ -153,3 +153,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afee402fac676ab49b949d508c60951f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dogActions: {fileID: -944628639613478452, guid: 0cc3697d2442d844b82aa1e0e2afa7ce,
+    type: 3}
+  speed: 3
+  rotationSpeed: 8
+  worldPosition: {x: 0, y: 0, z: 0}

@@ -1015,17 +1015,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6238198844959844722, guid: 995f2e9a8ddf7804088b5d14d54bbe44,
-        type: 3}
-      propertyPath: dogActions
-      value: 
-      objectReference: {fileID: -944628639613478452, guid: 0cc3697d2442d844b82aa1e0e2afa7ce,
-        type: 3}
-    - target: {fileID: 6238198844959844722, guid: 995f2e9a8ddf7804088b5d14d54bbe44,
-        type: 3}
-      propertyPath: DogActions.m_Name
-      value: Dog Actions
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
