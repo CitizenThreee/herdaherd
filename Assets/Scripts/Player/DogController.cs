@@ -1,3 +1,4 @@
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,22 +8,33 @@ public class DogController : MonoBehaviour
     [SerializeField] private InputActionAsset dogActions;
     private InputAction mousePos;
     private InputAction run;
+    [SerializeField] float speed;
+    [SerializeField] float rotationSpeed;
 
+    public Vector3 worldPosition;
+    Plane plane = new Plane(Vector3.up, 0);
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if(run.triggered)
+        if(run.ReadValue<float>() > 0f)
         {
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            float distance;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (plane.Raycast(ray, out distance))
+            {
+                worldPosition = ray.GetPoint(distance);
 
-            transform.position = new Vector3(worldPosition.x, transform.position.y, worldPosition.y);
+                Vector3 direction = (worldPosition - transform.position).normalized;
+                Quaternion lookRotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+                
+                transform.position = Vector3.MoveTowards(transform.position, worldPosition, speed * Time.deltaTime);
+            }
         }
     }
 
