@@ -16,7 +16,6 @@ public class DogController : MonoBehaviour
 
     void Start()
     {
-        
     }
 
     void Update()
