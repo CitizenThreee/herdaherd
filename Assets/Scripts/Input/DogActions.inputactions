@@ -1,0 +1,54 @@
+{
+    "name": "DogActions",
+    "maps": [
+        {
+            "name": "Main",
+            "id": "91940f21-28e1-4949-8c5d-7b65b2c0d7c5",
+            "actions": [
+                {
+                    "name": "run",
+                    "type": "Button",
+                    "id": "33cbbfd1-5167-4369-8a0b-2cfbfc1f869e",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "mousePos",
+                    "type": "Value",
+                    "id": "f097590b-4c3c-4f76-b028-9afafb8ae9d4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "240cf0f0-6c62-45e8-91c5-1aa46d59900c",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "run",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6de91b60-298d-4904-8f11-1f1ac605b3dc",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "mousePos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
