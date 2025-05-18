@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8734350818649930579}
   m_Layer: 0
   m_Name: Sheep
-  m_TagString: Untagged
+  m_TagString: Herd
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,6 +50,13 @@ MonoBehaviour:
   agentCollider: {fileID: 8734350818649930579}
   rb: {fileID: -5902416304327814662}
   maxForce: 10
+  dogDetectionRadius: 3
+  sheepPanicDetectionRadius: 1
+  panicDecayRate: 0.05
+  panicCooldownTime: 4
+  highPanicThreshold: 0.8
+  relaxedBehaviour: {fileID: 0}
+  panickedBehaviour: {fileID: 0}
 --- !u!54 &-5902416304327814662
 Rigidbody:
   m_ObjectHideFlags: 0

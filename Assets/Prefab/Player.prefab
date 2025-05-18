@@ -121,7 +121,7 @@ GameObject:
   - component: {fileID: 6615140861283458688}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -159,6 +159,8 @@ MonoBehaviour:
   moveForce: 15
   rotationSpeed: 360
   maxSpeed: 9
+  minSpeed: 2
+  maxSpeedDistance: 3
   turnThresholdAngle: 60
   brakingForce: 2
 --- !u!54 &6615140861283458688

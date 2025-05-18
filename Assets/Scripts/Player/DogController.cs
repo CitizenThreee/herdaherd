@@ -12,6 +12,8 @@ public class DogController : MonoBehaviour
     [SerializeField] private float moveForce = 20f;
     [SerializeField] private float rotationSpeed = 360f;
     [SerializeField] private float maxSpeed = 5f;
+    [SerializeField] private float minSpeed = 2f;  // Minimum speed when close to target
+    [SerializeField] private float maxSpeedDistance = 3f;  // Distance at which max speed is reached
     [SerializeField] private float turnThresholdAngle = 60f;
     [SerializeField] private float brakingForce = 3f;
 
@@ -53,21 +55,19 @@ public class DogController : MonoBehaviour
                 // Only move forward if we're facing roughly the right direction
                 if (angleToTarget <= turnThresholdAngle)
                 {
-                    // Calculate how much additional speed we need
+                    // Calculate distance-based target speed
+                    float distanceToTarget = Vector3.Distance(transform.position, targetPosition);
+                    float targetSpeed = Mathf.Lerp(minSpeed, maxSpeed, 
+                        Mathf.Clamp01(distanceToTarget / maxSpeedDistance));
+
+                    // Calculate current speed and force needed
                     float currentSpeed = rb.linearVelocity.magnitude;
-                    if (currentSpeed < maxSpeed)
+                    if (currentSpeed < targetSpeed)
                     {
-                        // Calculate force needed to reach but not exceed max speed
-                        float speedDiff = maxSpeed - currentSpeed;
+                        float speedDiff = targetSpeed - currentSpeed;
                         float appliedForce = Mathf.Min(moveForce, speedDiff * moveForce / maxSpeed);
                         rb.AddForce(transform.forward * appliedForce, ForceMode.Force);
                     }
-                    // else if (currentSpeed > maxSpeed)
-                    // {
-                    //     // Gently reduce speed if we're going too fast
-                    //     Vector3 normalizedVelocity = rb.linearVelocity.normalized;
-                    //     rb.linearVelocity = normalizedVelocity * maxSpeed;
-                    // }
                 }
             }
         }
@@ -111,14 +111,5 @@ public class DogController : MonoBehaviour
     {
         mousePos.Disable();
         run.Disable();
-    }
-
-    void OnDrawGizmos()
-    {
-        if (targetPosition != Vector3.zero)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(targetPosition, 0.5f);
-        }
     }
 }

@@ -8,16 +8,16 @@ public class SheepManager : MonoBehaviour
 {
     public SheepLogic sheepPrefab;
     List<SheepLogic> sheeps = new List<SheepLogic>();
-    public SheepBehaviour behaviour;
+    
+    [Header("Behaviors")]
+    public SheepBehaviour relaxedBehaviour;
+    public SheepBehaviour panickedBehaviour;
 
     public DogController dog;
 
     [Range(10,500)]
     public int startCount = 250;
     private const float agentDensity = 0.02f;
-    
-    [Range(1f, 50f)] 
-    public float driveFactor = 5f;
     
     [Range(0f, 20f)]
     public float maxSpeed = 5f;
@@ -56,20 +56,20 @@ public class SheepManager : MonoBehaviour
                 Quaternion.Euler(Vector3.up * Random.Range(0f, 360f)),
                 transform
             );
+
+            sheepObj.relaxedBehaviour = relaxedBehaviour;
+            sheepObj.panickedBehaviour = panickedBehaviour;
             
             sheeps.Add(sheepObj);
         }
     }
 
-    void FixedUpdate() // Changed from Update to FixedUpdate for physics
+    void FixedUpdate()
     {
         foreach (SheepLogic sheep in sheeps)
         {
             List<Transform> context = GetNearbyNeighbours(sheep);
-            Vector3 move = behaviour.calculateMove(sheep, context, this, dog);
-            
-            // Scale the movement by drive factor
-            move *= driveFactor;
+            Vector3 move = sheep.CalculateMovement(context, this, dog);
             
             // Limit to max speed
             if (move.sqrMagnitude > squareMaxSpeed)

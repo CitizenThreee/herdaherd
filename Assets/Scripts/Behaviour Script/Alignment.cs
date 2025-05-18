@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Movement/Alignment")]
-public class NewMonoBehaviourScript : SheepBehaviour
+public class Alignment : SheepBehaviour
 {
     public override Vector3 calculateMove(SheepLogic sheep, List<Transform> context, SheepManager manger, DogController dog)
     {
@@ -16,6 +16,6 @@ public class NewMonoBehaviourScript : SheepBehaviour
             move += item.transform.forward;
         }
         move /= context.Count;
-        return move;
+        return move.normalized * manger.maxSpeed;
     }
 }
