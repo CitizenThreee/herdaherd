@@ -6,20 +6,20 @@ using Random = UnityEngine.Random;
 
 public class SheepManager : MonoBehaviour
 {
-    
-    [SerializeField] GameObject sheepRef;
     public SheepLogic sheepPrefab;
     List<SheepLogic> sheeps = new List<SheepLogic>();
     public SheepBehaviour behaviour;
 
+    public DogController dog;
+
     [Range(10,500)]
     public int startCount = 250;
-    private const float angentDensity = 0.02f;
+    private const float agentDensity = 0.02f;
     
-    [Range(1f, 100f)] 
-    public float driveFactor = 10f;
+    [Range(1f, 50f)] 
+    public float driveFactor = 5f;
     
-    [Range(0f, 100f)]
+    [Range(0f, 20f)]
     public float maxSpeed = 5f;
 
     [Range(0f, 10f)] 
@@ -28,12 +28,13 @@ public class SheepManager : MonoBehaviour
     [Range(0f, 10f)] 
     public float avoidanceMultiplier = 0.5f;
 
+    [Range(0f, 350f)]
+    public float blindspotAngle = 90f;
+
     private float squareMaxSpeed;
     private float squareNeighbourRadius;
     public float squareAvoidanceMultiplier { get; private set; }
 
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         squareMaxSpeed = maxSpeed * maxSpeed;
@@ -42,46 +43,58 @@ public class SheepManager : MonoBehaviour
         
         for (float i = 0; i < startCount; i++)
         {
-            // for (float j = 0; j < 10; j++)
-            {
-                Vector2 pos = Random.insideUnitCircle * startCount * angentDensity;
-                Vector3 pos3D = new Vector3(Mathf.Clamp(pos.x, -5, 5), transform.position.y + 0.06f, Mathf.Clamp(pos.y, -5, 5));
-                SheepLogic sheepObj = Instantiate(sheepPrefab,
-                    pos3D,
-                    Quaternion.Euler(Vector3.forward * Random.Range(0f, 360f)),
-                    transform
-                );
-                sheeps.Add(sheepObj);
-            }
+            Vector2 pos = Random.insideUnitCircle * startCount * agentDensity;
+            Vector3 pos3D = new Vector3(
+                Mathf.Clamp(pos.x, -5, 5), 
+                transform.position.y + 0.06f, 
+                Mathf.Clamp(pos.y, -5, 5)
+            );
+            
+            SheepLogic sheepObj = Instantiate(
+                sheepPrefab,
+                pos3D,
+                Quaternion.Euler(Vector3.up * Random.Range(0f, 360f)),
+                transform
+            );
+            
+            sheeps.Add(sheepObj);
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void FixedUpdate() // Changed from Update to FixedUpdate for physics
     {
         foreach (SheepLogic sheep in sheeps)
         {
             List<Transform> context = GetNearbyNeighbours(sheep);
-            Vector3 move = behaviour.calculateMove(sheep, context, this);
+            Vector3 move = behaviour.calculateMove(sheep, context, this, dog);
+            
+            // Scale the movement by drive factor
+            move *= driveFactor;
+            
+            // Limit to max speed
             if (move.sqrMagnitude > squareMaxSpeed)
             {
                 move = move.normalized * maxSpeed;
             }
+            
             sheep.Move(move);
         }
-
     }
 
     private List<Transform> GetNearbyNeighbours(SheepLogic sheep)
     {
         List<Transform> context = new List<Transform>();
+        
         Collider[] colliders = Physics.OverlapSphere(sheep.transform.position, neighbourRadius);
-        //Collider2D[] collider2Ds = Physics2D.OverlapCircleAll(sheep.transform.position, neighbourRadius);
         foreach (Collider c in colliders)
         {
-            if (c != sheep)
+            if (c != sheep.AgentCollider)
             {
-                //Debug.Log("neightbours");
+                Vector3 toTarget = c.transform.position - sheep.transform.position;
+                float angle = Vector3.Angle(sheep.transform.forward, toTarget);
+
+                if (angle > 180 - blindspotAngle / 2) { continue; }
+
                 context.Add(c.transform);
             }
         }

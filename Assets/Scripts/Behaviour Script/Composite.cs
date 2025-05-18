@@ -6,7 +6,7 @@ public class Composite : SheepBehaviour
 {
     public SheepBehaviour[] behaviours;
     public float[] weights;
-    public override Vector3 calculateMove(SheepLogic sheep, List<Transform> context, SheepManager manger)
+    public override Vector3 calculateMove(SheepLogic sheep, List<Transform> context, SheepManager manger, DogController dog)
     {
         if (behaviours.Length != weights.Length)
         {
@@ -17,10 +17,10 @@ public class Composite : SheepBehaviour
         Vector3 move = Vector3.zero;
         for (int i = 0; i < behaviours.Length; i++)
         {
-            Vector3 partialMove = behaviours[i].calculateMove(sheep, context, manger) * weights[i];
+            Vector3 partialMove = behaviours[i].calculateMove(sheep, context, manger, dog) * weights[i];
             if (partialMove != Vector3.zero)
             {
-                if (partialMove.sqrMagnitude > weights[i] * weights[i]*weights[i]) // @TODO 
+                if (partialMove.sqrMagnitude > weights[i] * weights[i]) // @TODO 
                 {
                     partialMove.Normalize();
                     partialMove *= weights[i];

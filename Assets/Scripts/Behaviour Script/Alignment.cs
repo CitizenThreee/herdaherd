@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Movement/Alignment")]
 public class NewMonoBehaviourScript : SheepBehaviour
 {
-    public override Vector3 calculateMove(SheepLogic sheep, List<Transform> context, SheepManager manger)
+    public override Vector3 calculateMove(SheepLogic sheep, List<Transform> context, SheepManager manger, DogController dog)
     {
         if (context.Count == 0)
             return sheep.transform.forward;

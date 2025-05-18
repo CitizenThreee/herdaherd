@@ -12,5 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c704231528d2c40edb140daeb5c6d5ea, type: 3}
   m_Name: DefaultComposit
   m_EditorClassIdentifier: 
-  behaviours: []
-  weights: []
+  behaviours:
+  - {fileID: 11400000, guid: 387c0392a57dd4e3987fe81a476bcbbb, type: 2}
+  - {fileID: 11400000, guid: 6828fb47c9d2e41009882bcaa0f7c7ed, type: 2}
+  - {fileID: 11400000, guid: ec665f4c1fb5447dbaa55ca75876f3a1, type: 2}
+  - {fileID: 11400000, guid: 6bf468feef73e684c972c13d7226d35d, type: 2}
+  - {fileID: 11400000, guid: db6dd6a4723ff1945884641cfd5a8d44, type: 2}
+  weights:
+  - 1
+  - 2
+  - 1
+  - 1
+  - 1.2

@@ -5,7 +5,7 @@ using UnityEngine.AI;
 [CreateAssetMenu(menuName = "Movement/Avoid")]
 public class Avoid : SheepBehaviour
 {
-    public override Vector3 calculateMove(SheepLogic sheep, List<Transform> context, SheepManager manger)
+    public override Vector3 calculateMove(SheepLogic sheep, List<Transform> context, SheepManager manger, DogController dog)
     {
         if (context.Count == 0)
             return Vector3.zero;
@@ -18,7 +18,6 @@ public class Avoid : SheepBehaviour
             {
                 nAvoid++;
                 move += (sheep.transform.position - item.position);
-
             }
         }
 
@@ -26,6 +25,7 @@ public class Avoid : SheepBehaviour
         {
             move /= nAvoid;
         }
+
         return move;
     }
 }

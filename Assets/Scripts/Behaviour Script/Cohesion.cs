@@ -7,7 +7,7 @@ public class Cohesion : SheepBehaviour
     /**
      * Find the middle point between all the neighbours and move there
      */
-    public override Vector3 calculateMove(SheepLogic sheep, List<Transform> context, SheepManager manger)
+    public override Vector3 calculateMove(SheepLogic sheep, List<Transform> context, SheepManager manger, DogController dog)
     {
         if (context.Count == 0)
             return Vector3.zero;
